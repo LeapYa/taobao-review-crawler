@@ -17,7 +17,8 @@ import time
 import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RATE_CN = {"1": "好评", "2": "中评", "3": "差评", "0": "其他"}
+RATE_CN = {"1": "好评", "0": "中评", "-1": "差评"}
+RATING = {"1": 5, "0": 3, "-1": 1}
 
 
 def date_norm(s: str) -> str:
@@ -104,7 +105,7 @@ def main():
                 "user": r.get("reduceUserNick") or r.get("userNick") or "",
                 "rate_type": rt,
                 "rate_type_cn": RATE_CN.get(rt, "未知"),
-                "rating": {"1": 5, "2": 3, "3": 1}.get(rt, ""),
+                "rating": RATING.get(rt, ""),
                 "review_time": date_norm(r.get("feedbackDate")) or date_norm(r.get("createTime")),
                 "time_raw": r.get("feedbackDate") or r.get("createTime") or "",
                 "sku_color": sku_map.get("颜色分类", ""),

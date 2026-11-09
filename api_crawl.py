@@ -43,7 +43,7 @@ FIELDS = [
     "credit_level", "crawl_time", "source",
 ]
 
-RATE_CN = {"1": "好评", "2": "中评", "3": "差评", "0": "未知"}
+RATE_CN = {"1": "好评", "0": "中评", "-1": "差评"}
 
 
 # --------------------------------------------------------------- cookies
@@ -260,7 +260,7 @@ def main():
     ap.add_argument("--page-size", type=int, default=50)
     ap.add_argument("--start-page", type=int, default=1)
     ap.add_argument("--delay", type=float, default=4.5, help="每页间隔秒数（越小越容易被风控）")
-    ap.add_argument("--rate-type", default="", help="留空=全部；1=好评 2=中评 3=差评")
+    ap.add_argument("--rate-type", default="", help="留空=全部（接口本身不按类型过滤）")
     ap.add_argument("--max-punish", type=int, default=5, help="连续被风控多少次后放弃（配合 --delay 可长时间等冷却）")
     ap.add_argument("--inspect", action="store_true")
     ap.add_argument("--no-resume", action="store_true")

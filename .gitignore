@@ -29,3 +29,7 @@ venv/
 # ---- 系统 ----
 Thumbs.db
 .DS_Store
+
+# 临时探测脚本
+_*.py
+_p*.csv
