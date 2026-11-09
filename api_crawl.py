@@ -47,6 +47,20 @@ RATE_CN = {"1": "好评", "0": "中评", "-1": "差评"}
 
 
 # --------------------------------------------------------------- cookies
+def norm_item(s: str) -> str:
+    """接受纯数字 ID，也接受商品链接（item.taobao.com / detail.tmall.com 等）。"""
+    s = (s or "").strip()
+    if not s:
+        return ""
+    if s.isdigit():
+        return s
+    m = re.search(r"[?&](?:id|itemId|item_id)=(\d+)", s)
+    if m:
+        return m.group(1)
+    m = re.search(r"(\d{6,})", s)
+    return m.group(1) if m else ""
+
+
 def cookies_from_browser(port: int) -> dict:
     from selenium import webdriver
     from selenium.webdriver.chrome.service import Service
@@ -281,7 +295,12 @@ def main():
     if not ({"unb", "tracknick", "_nk_"} & set(ck)):
         print("[警告] cookie 里没有登录标识（unb/tracknick），接口会返回未登录错误")
 
-    items = [x.strip() for x in args.item.split(",") if x.strip()]
+    items = [norm_item(x) for x in args.item.split(",") if x.strip()]
+    items = [x for x in items if x]
+    if not items:
+        print("[错误] --item 里没解析出商品 ID")
+        return 2
+    print(f"[目标] {len(items)} 个商品: {', '.join(items)}")
     c = RateCollector(ck, args.out, resume=not args.no_resume, delay=args.delay)
     n = c.run(items, target=args.target, page_size=args.page_size,
               start_page=args.start_page, inspect=args.inspect, rate_type=args.rate_type,

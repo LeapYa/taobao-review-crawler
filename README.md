@@ -56,6 +56,12 @@ python grab_cookie.py
 # 采满全量（pageSize=50，约 100 页）
 python api_crawl.py --item 946520427043 --target 5000 --port 9334
 
+# --item 也接受商品链接，直接从浏览器地址栏复制即可
+python api_crawl.py --item "https://detail.tmall.com/item.htm?id=946520427043" --target 5000 --port 9334
+
+# 多个商品：逗号分隔，按顺序采完一个再采下一个，写进同一个 CSV
+python api_crawl.py --item "946520427043,917814363641" --target 5000 --port 9334
+
 # 已有 cookie 时不需要开浏览器
 python api_crawl.py --item 946520427043 --target 5000 --cookie cookies.json
 
@@ -84,7 +90,7 @@ python build_dataset.py --raw data/reviews_raw.jsonl --out data/reviews_final.cs
 
 | 参数 | 说明 |
 |---|---|
-| `--item` | 商品 ID，多个用逗号分隔 |
+| `--item` | 商品 ID，也接受商品链接；多个用逗号分隔，按顺序采完再切下一个 |
 | `--target` | 目标条数 |
 | `--out` | 输出 CSV |
 | `--rate-type` | 一般留空。该接口不按类型过滤，传值不改变结果集（见「数据口径」） |
