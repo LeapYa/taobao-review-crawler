@@ -1,0 +1,31 @@
+# ---- 登录态 / 浏览器 profile（含 cookie，绝不能提交）----
+cookies.json
+.taobao_profile/
+.taobao_profile*/
+*.pkl
+chrome_debug.log
+
+# ---- 驱动二进制 ----
+drivers/
+*.exe
+
+# ---- 采集产出（含第三方用户评价内容，不入库）----
+data/*.csv
+data/*.jsonl
+data/*.txt
+out/
+out_demo/
+debug/
+
+# ---- 调试用本地快照 ----
+fixtures/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ---- 系统 ----
+Thumbs.db
+.DS_Store
